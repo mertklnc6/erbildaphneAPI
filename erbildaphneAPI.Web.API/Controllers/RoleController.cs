@@ -1,14 +1,17 @@
 ﻿using erbildaphneAPI.Entity.DTOs;
 using erbildaphneAPI.Entity.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace erbildaphneAPI.WebAPI.Controllers
 {
+    
+    [ApiController]    
     [Route("api/[controller]")]
-    [ApiController]
-    [Authorize(Roles ="admin")]
+    [EnableCors("MyCorsePolicy")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : ControllerBase
     {
         private readonly IAccountService _service;
@@ -18,7 +21,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("list")]
+        [HttpGet("get")]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllRoles();
@@ -33,7 +36,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
             if (msg == "OK")
             {
-                return RedirectToAction("Index");
+                return Ok(model);
             }
             else
             {
@@ -43,7 +46,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("users/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var list = await _service.GetAllUsersWithRole(id);
@@ -53,7 +56,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
 
         [HttpPut("edit")]
-        public async Task<IActionResult> Edit(EditRoleDto model)
+        public async Task<IActionResult> Edit([FromBody] EditRoleDto model)
         {
             string msg = await _service.EditRoleListAsync(model);
             if (msg != "OK")
@@ -63,6 +66,21 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
 
             return Ok();
+        }
+
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            var item = _service.FindByIdAsync(id);
+
+            if (item != null)
+            {
+                await _service.DeleteRole(id);
+                return Ok();
+            }
+            return BadRequest();
         }
 
 

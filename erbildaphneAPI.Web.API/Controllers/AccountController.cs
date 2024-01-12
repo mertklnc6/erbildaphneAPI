@@ -45,6 +45,37 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
 
 
+        //[HttpPost("login")]
+
+        //public async Task<IActionResult> Login(LoginDto model)
+        //{
+        //    (string message, List<string> role) = await _accountService.FindByNameAsync(model);
+        //    if (role != null)
+        //    {
+        //        foreach (var roleClaim in role)
+        //        {
+        //            if (roleClaim == "Admin")
+        //            {
+        //                if (message == "OK")
+        //                {
+        //                    var token = _accountService.GenerateJwtToken(model.Email, role);
+        //                    return Ok(new { Token = token });
+        //                }
+        //            }
+        //            else if (roleClaim == "Editor")
+        //            {
+        //                if (message == "OK")
+        //                {
+        //                    var token = _accountService.GenerateJwtToken(model.Email, role);
+        //                    return Ok(new { Token = token });
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return Unauthorized();
+        //}
+
         [HttpPost("login")]
 
         public async Task<IActionResult> Login(LoginDto model)
@@ -52,24 +83,10 @@ namespace erbildaphneAPI.WebAPI.Controllers
             (string message, List<string> role) = await _accountService.FindByNameAsync(model);
             if (role != null)
             {
-                foreach (var roleClaim in role)
+                if (message == "OK")
                 {
-                    if (roleClaim == "Admin")
-                    {
-                        if (message == "OK")
-                        {
-                            var token = _accountService.GenerateJwtToken(model.Email, roleClaim);
-                            return Ok(new { Token = token });
-                        }
-                    }
-                    else if (roleClaim == "Editor")
-                    {
-                        if (message == "OK")
-                        {
-                            var token = _accountService.GenerateJwtToken(model.Email, roleClaim);
-                            return Ok(new { Token = token });
-                        }
-                    }
+                    var token = _accountService.GenerateJwtToken(model.Email, role);
+                    return Ok(new { Token = token });
                 }
             }
 
@@ -81,7 +98,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutAsync();
-            return Ok(new { Message = "Logout successful" });
+            return Ok(new { Message = "OK" });
         }
 
 

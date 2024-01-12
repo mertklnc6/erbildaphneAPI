@@ -1,6 +1,6 @@
 ﻿namespace erbildaphneAPI.Entity.Entities
 {
-    public class Write : BaseEntity
+    public class Article : BaseEntity
     {
         public string Title { get; set; }
         public string Description { get; set; }

@@ -7,20 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace erbildaphneAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [EnableCors("MyCorsPolicy")]
+    [EnableCors("ED")]
     [ApiController]
-    public class RumorController : ControllerBase
+    public class ArticleController : ControllerBase
     {
 
-        private readonly IRumorService _service;
+        private readonly IArticleService _service;
 
-        public RumorController(IRumorService rService)
+        public ArticleController(IArticleService service)
         {
-            _service = rService;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRumors()
+        public async Task<IActionResult> GetArticles()
         {
             var list = await _service.GetAllAsync();
             if (list == null)
@@ -29,18 +29,17 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
             return Ok(list);
         }
-        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                var rumor = await _service.GetById(id);
-                if (rumor == null)
+                var article = await _service.GetById(id);
+                if (article == null)
                 {
                     return NotFound($"Kayıt bulunamadı: ID={id}");
                 }
-                return Ok(rumor);
+                return Ok(article);
             }
             catch (Exception ex)
             {
@@ -49,8 +48,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
         }
 
-        [HttpPost]        
-        public IActionResult Create(RumorDto model)
+        [HttpPost]
+        [Authorize(Roles = "Editor")]
+        public IActionResult Create(ArticleDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -71,41 +71,27 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
 
         [HttpPut("{id}")]
-        //[Authorize]
-        public IActionResult Edit(int id, RumorDto model)
-        {
-            // Model doğrulamasını kontrol et
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // Gelen ID ile modelin ID'sinin eşleşip eşleşmediğini kontrol et
+        [Authorize(Roles = "Editor")]
+        public IActionResult Edit(int id, ArticleDto model)
+        {           
+           
+            
             if (model.Id != id)
             {
                 return BadRequest("ID değerleri uyuşmuyor.");
             }
 
-            //try
-            //{
+            
             _service.Update(model);
-            //if (updatedItem == null)
-            //{
-            //    return NotFound($"Güncelleme yapılamadı: ID={model.Id}");
-            //}
+           
 
-            // Başarılı güncelleme
+            
             return Ok();
-            //return Ok(updatedItem);
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Log exception here
-            //    return StatusCode(500, "Güncelleme hatası: " + ex.Message);
-            //}
+           
         }
 
-        [HttpDelete("{id}")]       
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Editor")]
         public async Task<IActionResult> Delete(int id)
         {
 

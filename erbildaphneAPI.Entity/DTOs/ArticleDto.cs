@@ -1,6 +1,6 @@
 ﻿namespace erbildaphneAPI.Entity.DTOs
 {
-    public class WriteDto
+    public class ArticleDto
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
@@ -12,7 +12,6 @@
         public int AuthorId { get; set; }
         public bool IsPublished { get; set; } = false;
         public bool IsBoosted { get; set; } = false;
-
         public bool IsChosen { get; set; } = false;
 
 

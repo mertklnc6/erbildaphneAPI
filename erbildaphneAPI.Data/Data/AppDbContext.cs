@@ -12,9 +12,10 @@ namespace erbildaphneAPI.DataAccess.Data
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Rumor> Rumors { get; set; }
-        public DbSet<Write> Writes { get; set; }
+        public DbSet<Article> Articles { get; set; }
         public DbSet<GNews> GNews { get; set; }
         public DbSet<GNewsSource> GNewsSources { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
 
 
@@ -29,9 +30,9 @@ namespace erbildaphneAPI.DataAccess.Data
             //    new Author { Id = 2, Name = "Daphne Barak", Bio = "Daphne Barak Biografi", PictureUrl = "/uploads/authors/2.png", Facebook = "facebook.com", Instagram = "instagram.com", Description = "açıklama", Linkedin = "linkedin.com", Website = "google.com" });
 
 
-            //builder.Entity<Write>().HasData(
-            //    new Write { Id = 1, Title = "Türkiye Amerikayı Devralıyor", AuthorId = 1, Description = "Türkiye hakkında", Content = "test content", PictureUrl = "/uploads/writes/2.png" },
-            //    new Write { Id = 2, Title = "Çini Açıp Kapatmak", AuthorId = 1, Description = "Türkiye hakkında", Content = "test content", PictureUrl = "/uploads/writes/2.png" });
+            //builder.Entity<Article>().HasData(
+            //    new Article { Id = 1, Title = "Türkiye Amerikayı Devralıyor", AuthorId = 1, Description = "Türkiye hakkında", Content = "test content", PictureUrl = "/uploads/articles/2.png" },
+            //    new Article { Id = 2, Title = "Çini Açıp Kapatmak", AuthorId = 1, Description = "Türkiye hakkında", Content = "test content", PictureUrl = "/uploads/articles/2.png" });
 
 
 

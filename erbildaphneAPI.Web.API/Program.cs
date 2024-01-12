@@ -12,14 +12,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//void ConfigureCulture()
-//{
-//    CultureInfo cultureInfo = CultureInfo.InvariantCulture;
-//    CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-//    CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-//}
-
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -36,9 +28,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy", policy =>
     {
-        policy.WithOrigins("https://erbildaphne.com", "*")
+        policy.WithOrigins("*")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod().WithMethods("GET", "POST", "PUT", "DELETE");
     });
 });
 

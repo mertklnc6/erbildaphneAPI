@@ -15,7 +15,7 @@
         public string PictureUrl { get; set; }
 
 
-        public virtual ICollection<Write> Writes { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
 
 
     }

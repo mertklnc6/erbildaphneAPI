@@ -3,30 +3,35 @@ using erbildaphneAPI.Entity.DTOs;
 using erbildaphneAPI.Entity.Entities;
 using erbildaphneAPI.Entity.Services;
 using erbildaphneAPI.Entity.UnitOfWorks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace erbildaphneAPI.Service.Services
 {
-    public class WriteService : IWriteService
+    public class CommentService : ICommentService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public WriteService(IMapper mapper, IUnitOfWork uow)
+        public CommentService(IMapper mapper, IUnitOfWork uow)
         {
             _mapper = mapper;
             _uow = uow;
         }
 
-        public async Task<WriteDto> GetById(int id)
+        public async Task<CommentDto> GetById(int id)
         {
             try
             {
-                var write = await _uow.GetRepository<Write>().GetById(id);
-                if (write == null)
+                var comment = await _uow.GetRepository<Comment>().GetById(id);
+                if (comment == null)
                 {
                     throw new KeyNotFoundException($"Kayıt bulunamadı: ID={id}");
                 }
-                return _mapper.Map<WriteDto>(write);
+                return _mapper.Map<CommentDto>(comment);
             }
             catch (Exception ex)
             {
@@ -37,12 +42,12 @@ namespace erbildaphneAPI.Service.Services
 
 
 
-        public async Task<IEnumerable<WriteDto>> GetAllAsync()
+        public async Task<IEnumerable<CommentDto>> GetAllAsync()
         {
             try
             {
-                var list = await _uow.GetRepository<Write>().GetAll();
-                return _mapper.Map<IEnumerable<WriteDto>>(list);
+                var list = await _uow.GetRepository<Comment>().GetAll();
+                return _mapper.Map<IEnumerable<CommentDto>>(list);
             }
             catch (Exception ex)
             {
@@ -55,12 +60,12 @@ namespace erbildaphneAPI.Service.Services
 
 
 
-        public async Task Create(WriteDto model)
+        public async Task Create(CommentDto model)
         {
             //try
             //{
-            var write = _mapper.Map<Write>(model);
-            await _uow.GetRepository<Write>().Create(write);
+            var comment = _mapper.Map<Comment>(model);
+            await _uow.GetRepository<Comment>().Create(comment);
             await _uow.CommitAsync();
             //}
             //catch (Exception ex)
@@ -71,22 +76,20 @@ namespace erbildaphneAPI.Service.Services
         }
 
 
-        public void Update(WriteDto model)
+        public void Update(CommentDto model)
         {
 
-            var write = new Write();
-            write.Id = model.Id;
-            write.AuthorId = model.AuthorId;
-            write.IsPublished = model.IsPublished;
-            write.IsDeleted = model.IsDeleted;
-            write.Content = model.Content;
-            write.PictureUrl = model.PictureUrl;
-            write.CreatedDate = model.CreatedDate;
-            write.Description = model.Description;
-            write.IsBoosted = model.IsBoosted;
-            write.IsChosen = model.IsChosen;
-            write.Title = model.Title;
-            _uow.GetRepository<Write>().Update(write);
+            var comment = new Comment();
+            comment.Id = model.Id;
+            comment.Content = model.Content;
+            comment.IsVerified = model.IsVerified;
+            comment.IsDeleted = model.IsDeleted;
+            comment.Content = model.Content;
+            comment.Name = model.Name;
+            comment.CreatedDate = model.CreatedDate;
+            comment.Email = model.Email;           
+            comment.Title = model.Title;
+            _uow.GetRepository<Comment>().Update(comment);
             _uow.Commit();
 
         }
@@ -96,13 +99,13 @@ namespace erbildaphneAPI.Service.Services
         {
             try
             {
-                var write = await _uow.GetRepository<Write>().GetById(id);
-                if (write == null)
+                var comment = await _uow.GetRepository<Comment>().GetById(id);
+                if (comment == null)
                 {
                     throw new KeyNotFoundException($"Silinmek için kayıt bulunamadı: ID={id}");
                 }
 
-                _uow.GetRepository<Write>().Delete(write);
+                _uow.GetRepository<Comment>().Delete(comment);
                 await _uow.CommitAsync();
             }
             catch (Exception ex)
@@ -111,6 +114,5 @@ namespace erbildaphneAPI.Service.Services
                 throw new Exception("Delete işlemi sırasında hata oluştu", ex);
             }
         }
-
     }
 }

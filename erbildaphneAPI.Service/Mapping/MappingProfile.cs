@@ -9,7 +9,7 @@ namespace erbildaphneAPI.Service.Mapping
         public MappingProfile()
         {
             CreateMap<Author, AuthorDto>().ReverseMap();
-            CreateMap<Write, WriteDto>().ReverseMap();
+            CreateMap<Article, ArticleDto>().ReverseMap();
             CreateMap<Rumor, RumorDto>().ReverseMap();
             CreateMap<GNews, GNewsDto>().ReverseMap();
             CreateMap<GNewsSource, GNewsSourceDto>().ReverseMap();
@@ -17,6 +17,7 @@ namespace erbildaphneAPI.Service.Mapping
             CreateMap<AppUser, RegisterDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<AppRole, RoleDto>().ReverseMap();
+            CreateMap<Comment, CommentDto>().ReverseMap();
 
 
         }

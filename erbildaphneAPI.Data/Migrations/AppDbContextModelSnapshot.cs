@@ -235,6 +235,55 @@ namespace erbildaphneAPI.DataAccess.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBoosted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsChosen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Articles");
+                });
+
             modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Author", b =>
                 {
                     b.Property<int>("Id")
@@ -411,49 +460,6 @@ namespace erbildaphneAPI.DataAccess.Migrations
                     b.ToTable("Rumors");
                 });
 
-            modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Write", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PictureUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("Writes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("erbildaphneAPI.DataAccess.Identity.Models.AppRole", null)
@@ -505,10 +511,10 @@ namespace erbildaphneAPI.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Write", b =>
+            modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Article", b =>
                 {
                     b.HasOne("erbildaphneAPI.Entity.Entities.Author", "Author")
-                        .WithMany("Writes")
+                        .WithMany("Articles")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -518,7 +524,7 @@ namespace erbildaphneAPI.DataAccess.Migrations
 
             modelBuilder.Entity("erbildaphneAPI.Entity.Entities.Author", b =>
                 {
-                    b.Navigation("Writes");
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

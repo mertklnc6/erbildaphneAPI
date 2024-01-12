@@ -22,9 +22,10 @@ namespace erbildaphneAPI.Entity.Services
         Task<UsersInOrOutDto> GetAllUsersWithRole(int id);
 
         Task<string> EditRoleListAsync(EditRoleDto model);
+        Task DeleteRole(int id);
         Task<UserDto> Find(string username);
 
-        string GenerateJwtToken(string email,string role);
+        string GenerateJwtToken(string email,List<string> role);
         Task LogoutAsync();
     }
 }

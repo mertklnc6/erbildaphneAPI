@@ -1,26 +1,24 @@
 ﻿using erbildaphneAPI.Entity.DTOs;
 using erbildaphneAPI.Entity.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace erbildaphneAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[EnableCors("MyCorsPolicy")]
     [ApiController]
-    public class WriteController : ControllerBase
+    public class CommentController : ControllerBase
     {
+        private readonly ICommentService _service;
 
-        private readonly IWriteService _service;
-
-        public WriteController(IWriteService service)
+        public CommentController(ICommentService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWrites()
+        public async Task<IActionResult> GetComments()
         {
             var list = await _service.GetAllAsync();
             if (list == null)
@@ -34,12 +32,12 @@ namespace erbildaphneAPI.WebAPI.Controllers
         {
             try
             {
-                var write = await _service.GetById(id);
-                if (write == null)
+                var comment = await _service.GetById(id);
+                if (comment == null)
                 {
                     return NotFound($"Kayıt bulunamadı: ID={id}");
                 }
-                return Ok(write);
+                return Ok(comment);
             }
             catch (Exception ex)
             {
@@ -49,8 +47,8 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        public IActionResult Create(WriteDto model)
+        [Authorize(Roles = "Editor")]
+        public IActionResult Create(CommentDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -71,27 +69,27 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
 
         [HttpPut("{id}")]
-       
-        public IActionResult Edit(int id, WriteDto model)
-        {           
-           
-            
+        [Authorize(Roles = "Editor")]
+        public IActionResult Edit(int id, CommentDto model)
+        {
+
+
             if (model.Id != id)
             {
                 return BadRequest("ID değerleri uyuşmuyor.");
             }
 
-            
-            _service.Update(model);
-           
 
-            
+            _service.Update(model);
+
+
+
             return Ok();
-           
+
         }
 
         [HttpDelete("{id}")]
-        //[Authorize]
+        [Authorize(Roles = "Editor")]
         public async Task<IActionResult> Delete(int id)
         {
 
@@ -104,7 +102,5 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
             return BadRequest();
         }
-
-
     }
 }

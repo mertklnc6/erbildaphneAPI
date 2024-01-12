@@ -32,7 +32,7 @@ namespace erbildaphneAPI.Service.Extensions
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.LoginPath = new PathString("/account/login");
-                    options.AccessDeniedPath = new PathString("/auth/denied");
+                    options.AccessDeniedPath = new PathString("/account/denied");
                 })
                 .AddJwtBearer(options =>
                 {
@@ -70,12 +70,13 @@ namespace erbildaphneAPI.Service.Extensions
             // Repositories and Services
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IWriteService, WriteService>();
+            services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IRumorService, RumorService>();
             services.AddScoped<IGNewsService, GNewsService>();
             services.AddScoped<IGNewsSourceService, GNewsSourceService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
