@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy", policy =>
     {
-        policy.WithOrigins("*")
+        policy.WithOrigins("https://www.erbildaphne.com", "https://erbildaphne.com")
               .AllowAnyHeader()
               .AllowAnyMethod().WithMethods("GET", "POST", "PUT", "DELETE");
     });

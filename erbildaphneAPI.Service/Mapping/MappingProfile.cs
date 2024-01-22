@@ -18,6 +18,8 @@ namespace erbildaphneAPI.Service.Mapping
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<AppRole, RoleDto>().ReverseMap();
             CreateMap<Comment, CommentDto>().ReverseMap();
+            CreateMap<SecondArticle, SecondArticleDto>().ReverseMap();            
+            CreateMap<MainNews, MainNewsDto>().ReverseMap();
 
 
         }

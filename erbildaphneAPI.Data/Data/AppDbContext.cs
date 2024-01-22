@@ -16,6 +16,8 @@ namespace erbildaphneAPI.DataAccess.Data
         public DbSet<GNews> GNews { get; set; }
         public DbSet<GNewsSource> GNewsSources { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<SecondArticle> SecondArticles { get; set; }        
+        public DbSet<MainNews> MainNews { get; set; }
 
 
 

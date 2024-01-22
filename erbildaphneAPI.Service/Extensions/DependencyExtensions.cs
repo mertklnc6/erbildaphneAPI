@@ -77,6 +77,8 @@ namespace erbildaphneAPI.Service.Extensions
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ISecondArticleService, SecondArticleService>();            
+            services.AddScoped<IMainNewsService, MainNewsService>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
