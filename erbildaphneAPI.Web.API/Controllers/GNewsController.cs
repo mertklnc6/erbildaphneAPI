@@ -19,7 +19,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("get/")]
         public async Task<IActionResult> GetGNews()
         {
             var list = await _service.GetAllAsync();
@@ -29,7 +29,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
             return Ok(list);
         }
-        [HttpGet("{id}")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -48,9 +48,10 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
         }
 
-        [HttpPost]
-        //[Authorize]
-        public IActionResult Create(GNewsDto model)
+        [HttpPost("create/")]
+		[Authorize(Roles = "Editor")]
+		//[Authorize]
+		public IActionResult Create([FromBody] GNewsDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -70,8 +71,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]        
-        public IActionResult Edit(int id, GNewsDto model)
+        [HttpPut("edit/{id}")]
+		[Authorize(Roles = "Editor")]
+		public IActionResult Edit(int id, [FromBody] GNewsDto model)
         {
 
 
@@ -88,8 +90,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
         }
 
-        [HttpDelete("{id}")]        
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("delete/{id}")]
+		[Authorize(Roles = "Editor")]
+		public async Task<IActionResult> Delete(int id)
         {
 
             var item = _service.GetById(id);

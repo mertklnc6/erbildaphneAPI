@@ -17,7 +17,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("get/")]
         public async Task<IActionResult> GetComments()
         {
             var list = await _service.GetAllAsync();
@@ -27,7 +27,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
             return Ok(list);
         }
-        [HttpGet("{id}")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -46,9 +46,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("create/")]
         [Authorize(Roles = "Editor")]
-        public IActionResult Create(CommentDto model)
+        public IActionResult Create([FromBody] CommentDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -68,9 +68,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         [Authorize(Roles = "Editor")]
-        public IActionResult Edit(int id, CommentDto model)
+        public IActionResult Edit(int id, [FromBody] CommentDto model)
         {
 
 
@@ -88,7 +88,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
 
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [Authorize(Roles = "Editor")]
         public async Task<IActionResult> Delete(int id)
         {

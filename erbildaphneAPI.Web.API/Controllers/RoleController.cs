@@ -21,7 +21,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("get")]
+        [HttpGet("get/")]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllRoles();
@@ -29,8 +29,8 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPost("create")]
-        public async Task<IActionResult> Create(RoleDto model)
+        [HttpPost("create/")]
+        public async Task<IActionResult> Create([FromBody] RoleDto model)
         {
             string msg = await _service.CreateRoleAsync(model);
 
@@ -46,7 +46,8 @@ namespace erbildaphneAPI.WebAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("users/{id}")]
+        [HttpGet("user/{id}")]
+
         public async Task<IActionResult> Edit(int id)
         {
             var list = await _service.GetAllUsersWithRole(id);
@@ -55,7 +56,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPut("edit")]
+        [HttpPut("edit/")]
         public async Task<IActionResult> Edit([FromBody] EditRoleDto model)
         {
             string msg = await _service.EditRoleListAsync(model);

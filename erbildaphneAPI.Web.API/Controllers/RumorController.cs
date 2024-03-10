@@ -19,7 +19,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = rService;
         }
 
-        [HttpGet]
+        [HttpGet("get/")]
         public async Task<IActionResult> GetRumors()
         {
             var list = await _service.GetAllAsync();
@@ -30,7 +30,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             return Ok(list);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -49,8 +49,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
         }
 
-        [HttpPost]        
-        public IActionResult Create(RumorDto model)
+        [HttpPost("create/")]
+		[Authorize(Roles = "Editor")]
+		public IActionResult Create([FromBody] RumorDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -70,9 +71,10 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        //[Authorize]
-        public IActionResult Edit(int id, RumorDto model)
+        [HttpPut("edit/{id}")]
+		[Authorize(Roles = "Editor")]
+		//[Authorize]
+		public IActionResult Edit(int id, [FromBody] RumorDto model)
         {
             // Model doğrulamasını kontrol et
             if (!ModelState.IsValid)
@@ -105,8 +107,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
             //}
         }
 
-        [HttpDelete("{id}")]       
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("delete/{id}")]
+		[Authorize(Roles = "Editor")]
+		public async Task<IActionResult> Delete(int id)
         {
 
             var item = _service.GetById(id);

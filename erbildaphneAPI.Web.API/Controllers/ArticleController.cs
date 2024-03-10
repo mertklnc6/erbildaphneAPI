@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace erbildaphneAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [EnableCors("ED")]
+    [EnableCors("MyCorsPolicy")]
     [ApiController]
     public class ArticleController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("get/")]
         public async Task<IActionResult> GetArticles()
         {
             var list = await _service.GetAllAsync();
@@ -29,7 +29,8 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
             return Ok(list);
         }
-        [HttpGet("{id}")]
+
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -48,9 +49,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("create/")]
         [Authorize(Roles = "Editor")]
-        public IActionResult Create(ArticleDto model)
+        public IActionResult Create([FromBody] ArticleDto model)
         {
             //if (!ModelState.IsValid)
             //{
@@ -70,9 +71,9 @@ namespace erbildaphneAPI.WebAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         [Authorize(Roles = "Editor")]
-        public IActionResult Edit(int id, ArticleDto model)
+        public IActionResult Edit(int id,[FromBody] ArticleDto model)
         {           
            
             
@@ -90,7 +91,7 @@ namespace erbildaphneAPI.WebAPI.Controllers
            
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [Authorize(Roles = "Editor")]
         public async Task<IActionResult> Delete(int id)
         {

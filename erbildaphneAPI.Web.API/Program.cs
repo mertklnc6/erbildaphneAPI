@@ -28,9 +28,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy", policy =>
     {
-        policy.WithOrigins("https://www.erbildaphne.com", "https://erbildaphne.com")
+        //policy.WithOrigins("https://www.erbildaphne.com", "https://erbildaphne.com","https://localhost:7000")
+        //      .AllowAnyHeader()
+        //      .AllowAnyMethod().WithMethods("GET", "POST", "PUT", "DELETE");
+        policy.WithOrigins("*")
               .AllowAnyHeader()
-              .AllowAnyMethod().WithMethods("GET", "POST", "PUT", "DELETE");
+              .AllowAnyMethod().WithMethods("GET", "POST", "PUT", "DELETE"); ;
     });
 });
 

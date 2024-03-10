@@ -52,15 +52,9 @@ namespace erbildaphneAPI.Service.Extensions
             // Identity
             services.AddIdentity<AppUser, AppRole>(opt =>
             {
-                // Password and lockout settings
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequiredLength = 8;
-                opt.Password.RequireUppercase = false;
-                opt.Password.RequireLowercase = false;
-                opt.Password.RequireDigit = false;
-                opt.User.RequireUniqueEmail = true;
-                opt.Lockout.MaxFailedAccessAttempts = 3;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                // Password and lockout settings                       
+                opt.User.RequireUniqueEmail = true;                
+                
             })
             .AddEntityFrameworkStores<AppDbContext>();
 
